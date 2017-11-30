@@ -6,15 +6,23 @@
     </head>
     <body>
         <div class="center">
-                <input title:"37AX-L" id="inp1" type="number" value="0" onchange="getAbs(this)">
-                <p id="id1" >37AX-L @$12.45ea &#09 $0.00 </p>
-                <input title:"42XR-j" id="inp2" type="number" value="0" onchange="getAbs(this)">
-                <p id="id2">42XR-J @$15.34ea &#09 $0.00</p>
-
-                <input title="93ZZ-A" id="inp3" type="number" value="0" onchange="getAbs(this)">
-                <p id="id3">93ZZ-A @$28.99ea &#09 $0.00</p>
-                <button title="Total" onclick="total()">Total</button>
-                <p id="totalValue">Your total is: $0.00</p>
+            <table>
+                <tr>
+                    <td><p id="id1">37AX-L @$12.45ea &#09 $0.00 </p></td>
+                    <td><input title: "37AX-L" id="inp1" type="number" value="0" onchange="getAbs(this)"></td>
+                </tr>
+                <tr>    
+                    <td><p id="id2">42XR-J @$15.34ea &#09 $0.00</p></td>
+                    <td><input title: "42XR-j" id="inp2" type="number" value="0" onchange="getAbs(this)"></td>
+                </tr>
+                <tr>
+                    <p id="id3">93ZZ-A @$28.99ea &#09 $0.00</p>
+                    <input title="93ZZ-A" id="inp3" type="number" value="0" onchange="getAbs(this)">
+                </tr>
+                    <button title="Total" onclick="total()">Total</button>
+                    <p id="totalValue">Your total is: $0.00</p>
+            </table>
+                    
                 <br>
                 <select>
                         <option value="AL">Alabama</option>

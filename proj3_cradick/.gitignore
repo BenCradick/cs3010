@@ -6,6 +6,7 @@
 
 ### Sass ###
 .sass-cache/
+*.scss
 *.css.map
 
 ### VisualStudioCode ###

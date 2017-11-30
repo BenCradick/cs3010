@@ -24,7 +24,7 @@ function writeDescription(a){
     //running this calculation through ALU ahead of other instructions
     var subPrice = (document.getElementById(a).value * inputId[a]["price"]).toFixed(2)
     var temp = inputId[a]["id"]
-    widget = inputId[a]["name"] + " @$" + inputId[a]["price"] +"ea = \t$" + subPrice
+    widget = "$" + subPrice
     document.getElementById(temp).innerHTML = widget
     //caching this for use in total
     inputId[a]["subTotal"] = subPrice;
@@ -71,5 +71,5 @@ function feeAgree(){
 }
 function total()
 {
-    document.getElementById("totalValue").innerHTML = "Your total is: $" + runningTotal;
+    document.getElementById("totalValue").innerHTML = "$" + runningTotal.toFixed(2);
 }

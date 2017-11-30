@@ -1,31 +1,54 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
-    <head>
-        <script src="proj3.js"></script>
-        <link ref="stylesheet" href="proj3.css">
-    </head>
-    <body>
-            <table class="table-minimal">
-                <tr>
-                    <td id="id1">37AX-L @$12.45ea &#09 $0.00</td>
-                    <td><input title: "37AX-L" id="inp1" type="number" value="0" onchange="getAbs(this)"></td>
-                </tr>
-                <tr>    
-                    <td id="id2">42XR-J @$15.34ea &#09 $0.00</td>
-                    <td><input title: "42XR-j" id="inp2" type="number" value="0" onchange="getAbs(this)"></td>
-                </tr>
-                <tr>
-                    <td><p id="id3">93ZZ-A @$28.99ea &#09 $0.00</p></td>
-                    <td><input title="93ZZ-A" id="inp3" type="number" value="0" onchange="getAbs(this)"></td>
-                </tr>
-                <tr>
-                    <td><p id="totalValue">Your total is: $0.00</p></td>
-                    <td><button title="Total" onclick="total()">Total</button></td>
-                </tr>
-            </table>
-                
-            <br>
-            <select>
+
+<head>
+    <script src="proj3.js"></script>
+    <link rel="stylesheet" href="proj3.css">
+</head>
+<table class="table-minimal">
+    <thead>
+        <tr>
+            <th>Unit</th>
+            <th>Unit Cost</th>
+            <th>Quantity</th>
+            <th>Unit Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>37AX-L</td>
+            <td>$12.45ea</td>
+            <td>
+                <input title: "37AX-L" id="inp1" type="number" value="0" onchange="getAbs(this)">
+            </td>
+            <td id="id1">$0.00</td>
+        </tr>
+        <tr>
+            <td>42XR-J</td>
+            <td>$15.34ea</td>
+            <td>
+                <input title: "42XR-j" id="inp2" type="number" value="0" onchange="getAbs(this)">
+            </td>
+            <td id="id2">$0.00</td>
+        </tr>
+        <tr>
+            <td>93ZZ-A</td>
+            <td>$28.99ea</td>
+            <td>
+                <input title="93ZZ-A" id="inp3" type="number" value="0" onchange="getAbs(this)">
+            </td>
+            <td id="id3">$0.00</td>
+        </tr>
+        <tr>
+            <td>Your SubTotal is:</td>
+            <td></td>
+            <td></td>
+            <td id="subTotalValue">$0.00</td>
+        </tr>
+        <tr>
+            <td>Select the state of the shipping adress:</td>
+            <td>
+                <select>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
@@ -78,8 +101,15 @@
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                 </select>
-                <br>
-            <button id="button" onclick="submit()">Submit</button>
+            </td>
+            <td>
+                <button id="button" onclick="submit()">Submit</button>
+            </td>
 
-    </body>
+        </tr>
+    </tbody>
+</table>
+<br>
+<div id="shipAgree"></div>
+
 </html>

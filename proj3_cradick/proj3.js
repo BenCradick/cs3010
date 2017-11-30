@@ -1,13 +1,13 @@
 var shipExtraExist = false;
 var widget;
 var numberWidgets = 0;
-var runningTotal = 0;
+var runningsubTotal = 0;
 var feeCheck = false;
 //stores all widget related values for later access.
 var inputId = {
-    inp1:{name:"37AX-L", price:12.45, id:"id1", subTotal:0, subQuantity:0},
-    inp2:{name:"42XR-J", price:15.34, id:"id2", subTotal:0, subQuantity:0},
-    inp3:{name:"93ZZ-A", price:28.99 , id:"id3", subTotal:0, subQuantity:0}
+    inp1:{name:"37AX-L", price:12.45, id:"id1", unitSubTotal:0, subQuantity:0},
+    inp2:{name:"42XR-J", price:15.34, id:"id2", unitSubTotal:0, subQuantity:0},
+    inp3:{name:"93ZZ-A", price:28.99 , id:"id3", unitSubTotal:0, subQuantity:0}
 };
  //prevents order amounts below 0 and calls the script to update text             
 function getAbs(a){
@@ -16,7 +16,9 @@ function getAbs(a){
     inputId[a.id]["subQuantity"] = document.getElementById(a.id).value;
     numberWidgets = Number(inputId.inp2.subQuantity) +  Number(inputId.inp3.subQuantity) + Number(inputId.inp1.subQuantity)
     writeDescription(a.id);
-    runningTotal = Number(inputId.inp1.subTotal) + Number(inputId.inp2.subTotal) + Number(inputId.inp3.subTotal);
+    runningsubTotal = Number(inputId.inp1.unitSubTotal) + Number(inputId.inp2.unitSubTotal) + Number(inputId.inp3.unitSubTotal);
+
+    subTotal();
 
 }
 //Updates the text in the <p> element to accurately represent amount spent on each widget.
@@ -26,11 +28,13 @@ function writeDescription(a){
     var temp = inputId[a]["id"]
     widget = "$" + subPrice
     document.getElementById(temp).innerHTML = widget
-    //caching this for use in total
-    inputId[a]["subTotal"] = subPrice;
+    //caching this for use in subTotal
+    inputId[a]["unitSubTotal"] = subPrice;
 
     //checking too see we've generated the extra shipping agreememnt box
-    if(extraShipping() && !shipExtraExist){writeBox()}
+    if(extraShipping() && !shipExtraExist){
+        writeBox()
+    }
 }
 function Order(){
     
@@ -44,7 +48,7 @@ function extraShipping(){
     return false;
 }
 function writeBox(){
-    document.getElementById("shipAgree").innerHTML = `<input type="checkbox" title="extraShipping" value="Agree"> I agree to be charged an additional fee of 3 schrute bucks for shipping over 30 items <br><br>`
+    document.getElementById("shipAgree").innerHTML = ` I agree to be charged an additional fee for shipping over 30 items <input type="checkbox" title="extraShipping" value="Agree" onClick="feeAgree()">`
 
     shipExtraExist = true;
 }
@@ -53,7 +57,7 @@ function submit(){
         alert("Negative quantity entered for widget, fix this and resubmit");
         return;
     }
-    if(extraShipping())
+    if(extraShipping() && !feeCheck)
     {
         alert("More than 30 items to be shipped, please check box saying you agree to the additional fee.")
         feeCheck? alert("Order Placed"): alert("Please check box agreeing to additional fee");
@@ -69,7 +73,7 @@ function feeAgree(){
     feeCheck = !feeCheck;
     console.log(feeCheck)
 }
-function total()
+function subTotal()
 {
-    document.getElementById("totalValue").innerHTML = "$" + runningTotal.toFixed(2);
+    document.getElementById("subTotalValue").innerHTML = "$" + runningsubTotal.toFixed(2);
 }

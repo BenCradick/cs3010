@@ -10,18 +10,53 @@ $price1 = '12.45';
 $price2 = '15.34';
 $price3 = '28.99';
 
+//calculate hte number of items
+$numItems = $inp1 + $inp2 + $inp3;
+
 $subPrice1 = $price1 * $inp1;
 $subPrice2 = $price2 * $inp2;
 $subPrice3 = $price3 * $inp3;
 
-$subTotal = $price1 * $inp1 + $price2 * $inp2 + $price3 * $inp3;
+//All the sub prices added up
+$subTotal = $subPrice1 + $subPrice2 + $subPrice3;
+
+$total = $subTotal*calcDiscount($numItems) + calcShipping($numItems);
+$tax = $total*calcTax($state);
+
+//returns number to multiply by if there is a discount
+function calcDiscount($numItems){
+    return ($numItems>=50 ? 0.95 : 1);
+}
+//returns tax rate for state as a decimal representation of a percentage
+function calcTax($state){
+    switch ($state) {
+        case 'KS':
+            return 0.04375;
+        case 'FL':
+            return 0.06265;
+        default:
+            return 0;
+    }
+}
+//returns amount to be charged for shipping
+function calcShipping($numItems){
+    return ($numItems > 30 ? 8.74 : 15.35);
+}
+function calcTotal(){
+
+}
+function extendTable($numItems, $state, $tax, $subTotal){
+    echo "<tr>\n";
+    echo "\t<td>";
+
+}
 ?>
 
 <!DOCTYPE html>
 <html>
     <head>
         <script src="proj3.js"></script>
-        <link rel="stylesheet" href="proj3.css">   
+        <link rel="stylesheet" href="proj3.css" type="text/css">   
     </head>
     <table class="table-minimal">
         <thead>
@@ -36,88 +71,26 @@ $subTotal = $price1 * $inp1 + $price2 * $inp2 + $price3 * $inp3;
             <tr>
                 <td>37AX-L</td>
                 <td>$12.45ea</td>
-                <td><?php echo $inp1?></td>
-                <td><?php echo $subPrice1?> </td>
+                <?php echo "<td>" . $inp1 . "</td>";?>
+                <?php echo "<td>$" . $subPrice1 . "</td>";?>
             </tr>
             <tr>
                 <td>42XR-J</td>
                 <td>$15.34ea</td>
-                <td><?php echo $inp2?></td>
-                <td><?php echo $subPrice2?></td>
+                <?php echo "<td>" . $inp2 . "</td>";?>
+                <?php echo "<td>$" . $subPrice2 . "</td>";?>
             </tr>
             <tr>
                 <td>93ZZ-A</td>
                 <td>$28.99ea</td>
-                <td><?php echo $inp3?></td>
-                <td><?php echo $subPrice3?></td>
+                <?php echo "<td>" . $inp3 . "</td>";?>
+                <?php echo '<td> $' . $subPrice3 . '</td>';?>
             </tr>
             <tr>
                 <td>Your SubTotal is:</td>
                 <td></td>
                 <td></td>
-                <td><?php echo $subTotal?></td>
-            </tr>
-            <tr>
-                <td>Select the state of the shipping adress:</td>
-                <td>
-                    <select>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                        <option value="AR">Arkansas</option>
-                        <option value="CA">California</option>
-                        <option value="CO">Colorado</option>
-                        <option value="CT">Connecticut</option>
-                        <option value="DE">Delaware</option>
-                        <option value="DC">District Of Columbia</option>
-                        <option value="FL">Florida</option>
-                        <option value="GA">Georgia</option>
-                        <option value="HI">Hawaii</option>
-                        <option value="ID">Idaho</option>
-                        <option value="IL">Illinois</option>
-                        <option value="IN">Indiana</option>
-                        <option value="IA">Iowa</option>
-                        <option value="KS">Kansas</option>
-                        <option value="KY">Kentucky</option>
-                        <option value="LA">Louisiana</option>
-                        <option value="ME">Maine</option>
-                        <option value="MD">Maryland</option>
-                        <option value="MA">Massachusetts</option>
-                        <option value="MI">Michigan</option>
-                        <option value="MN">Minnesota</option>
-                        <option value="MS">Mississippi</option>
-                        <option value="MO">Missouri</option>
-                        <option value="MT">Montana</option>
-                        <option value="NE">Nebraska</option>
-                        <option value="NV">Nevada</option>
-                        <option value="NH">New Hampshire</option>
-                        <option value="NJ">New Jersey</option>
-                        <option value="NM">New Mexico</option>
-                        <option value="NY">New York</option>
-                        <option value="NC">North Carolina</option>
-                        <option value="ND">North Dakota</option>
-                        <option value="OH">Ohio</option>
-                        <option value="OK">Oklahoma</option>
-                        <option value="OR">Oregon</option>
-                        <option value="PA">Pennsylvania</option>
-                        <option value="RI">Rhode Island</option>
-                        <option value="SC">South Carolina</option>
-                        <option value="SD">South Dakota</option>
-                        <option value="TN">Tennessee</option>
-                        <option value="TX">Texas</option>
-                        <option value="UT">Utah</option>
-                        <option value="VT">Vermont</option>
-                        <option value="VA">Virginia</option>
-                        <option value="WA">Washington</option>
-                        <option value="WV">West Virginia</option>
-                        <option value="WI">Wisconsin</option>
-                        <option value="WY">Wyoming</option>
-                    </select>
-                </td>
-                <td>
-                    <button id="button" onclick="submit()">Submit</button>
-                </td>
-
+                <?php echo '<td>' . $subTotal . '</td>';?>
             </tr>
         </tbody>
     </table>

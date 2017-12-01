@@ -15,12 +15,12 @@
         </tr>
     </thead>
     <tbody>
-        <form action="proj3.php" target="_self">
+        <form action="proj3.php" method="post">
             <tr>
                 <td>37AX-L</td>
                 <td>$12.45ea</td>
                 <td>
-                    <input title: "37AX-L" id="inp1" type="number" value="37AX-L" onchange="getAbs(this)">
+                    <input name="37AX-L" id="inp1" type="number" value="0" onchange="getAbs(this)">
                 </td>
                 <td id="id1">$0.00</td>
             </tr>
@@ -28,7 +28,7 @@
                 <td>42XR-J</td>
                 <td>$15.34ea</td>
                 <td>
-                    <input title: "42XR-j" id="inp2" type="number" value="42XR-j" onchange="getAbs(this)">
+                    <input name="42XR-j" id="inp2" type="number" value="0" onchange="getAbs(this)">
                 </td>
                 <td id="id2">$0.00</td>
             </tr>
@@ -36,7 +36,7 @@
                 <td>93ZZ-A</td>
                 <td>$28.99ea</td>
                 <td>
-                    <input title="93ZZ-A" id="inp3" type="number" value="93ZZ-A" onchange="getAbs(this)">
+                    <input name="93ZZ-A" id="inp3" type="number" value="0" onchange="getAbs(this)">
                 </td>
                 <td id="id3">$0.00</td>
             </tr>
@@ -49,7 +49,7 @@
             <tr>
                 <td>Select the state of the shipping adress:</td>
                 <td>
-                    <select>
+                    <select name="State">
                         <option value="AL">Alabama</option>
                         <option value="AK">Alaska</option>
                         <option value="AZ">Arizona</option>

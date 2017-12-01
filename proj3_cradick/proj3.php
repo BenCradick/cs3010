@@ -1,3 +1,22 @@
+<?php
+// Grab vars
+$inp1 = $_POST['37AX-L'];
+$inp2 = $_POST['42XR-j'];
+$inp3 = $_POST['93ZZ-A'];
+$state = $_POST['State'];
+
+//prices correspond to part above respectively.
+$price1 = '12.45';
+$price2 = '15.34';
+$price3 = '28.99';
+
+$subPrice1 = $price1 * $inp1;
+$subPrice2 = $price2 * $inp2;
+$subPrice3 = $price3 * $inp3;
+
+$subTotal = $price1 * $inp1 + $price2 * $inp2 + $price3 * $inp3;
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,32 +36,26 @@
             <tr>
                 <td>37AX-L</td>
                 <td>$12.45ea</td>
-                <td>
-                    <input title: "37AX-L" id="inp1" type="number" value="0" onchange="getAbs(this)">
-                </td>
-                <td id="id1">$0.00</td>
+                <td><?php echo $inp1?></td>
+                <td><?php echo $subPrice1?> </td>
             </tr>
             <tr>
                 <td>42XR-J</td>
                 <td>$15.34ea</td>
-                <td>
-                    <input title: "42XR-j" id="inp2" type="number" value="0" onchange="getAbs(this)">
-                </td>
-                <td id="id2">$0.00</td>
+                <td><?php echo $inp2?></td>
+                <td><?php echo $subPrice2?></td>
             </tr>
             <tr>
                 <td>93ZZ-A</td>
                 <td>$28.99ea</td>
-                <td>
-                    <input title="93ZZ-A" id="inp3" type="number" value="0" onchange="getAbs(this)">
-                </td>
-                <td id="id3">$0.00</td>
+                <td><?php echo $inp3?></td>
+                <td><?php echo $subPrice3?></td>
             </tr>
             <tr>
                 <td>Your SubTotal is:</td>
                 <td></td>
                 <td></td>
-                <td id="subTotalValue">$0.00</td>
+                <td><?php echo $subTotal?></td>
             </tr>
             <tr>
                 <td>Select the state of the shipping adress:</td>

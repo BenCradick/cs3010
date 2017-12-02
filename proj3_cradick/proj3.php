@@ -21,26 +21,26 @@ $subPrice3 = $price3 * $inp3;
 $subTotal = $subPrice1 + $subPrice2 + $subPrice3;
 
 $total = $subTotal*calcDiscount($numItems) + calcShipping($numItems);
-$tax = $total*calcTax($state);
+$tax = calcTax($state, $subTotal, $numItems);
 
 //returns number to multiply by if there is a discount
 function calcDiscount($numItems){
     return ($numItems>=50 ? 0.95 : 1);
 }
 //returns tax rate for state as a decimal representation of a percentage
-function calcTax($state){
+function calcTax($state, $subTotal, $numItems){
     switch ($state) {
         case 'KS':
-            return 0.04375;
+            return 0.04375*($subTotal + calcShipping($numItems));
         case 'FL':
-            return 0.06265;
+            return 0.06265*$subTotal;
         default:
             return 0;
     }
 }
 //returns amount to be charged for shipping
 function calcShipping($numItems){
-    return ($numItems > 30 ? 8.74 : 15.35);
+    return ($numItems < 30 ? 8.74 : 15.35);
 }
 function calcTotal(){
 
@@ -56,7 +56,7 @@ function extendTable($numItems, $state, $tax, $subTotal){
 <html>
     <head>
         <script src="proj3.js"></script>
-        <link rel="stylesheet" href="proj3.css" type="text/css">   
+        <link rel="stylesheet" href="proj3.css">
     </head>
     <table class="table-minimal">
         <thead>
@@ -71,25 +71,25 @@ function extendTable($numItems, $state, $tax, $subTotal){
             <tr>
                 <td>37AX-L</td>
                 <td>$12.45ea</td>
-                <?php echo "<td>" . $inp1 . "</td>";?>
-                <?php echo "<td>$" . $subPrice1 . "</td>";?>
+                <?php echo '<td>' . $inp1 . '</td>';?>
+                <?php echo '<td>$' . $subPrice1 . '</td>';?>
             </tr>
             <tr>
                 <td>42XR-J</td>
                 <td>$15.34ea</td>
-                <?php echo "<td>" . $inp2 . "</td>";?>
-                <?php echo "<td>$" . $subPrice2 . "</td>";?>
+                <?php echo '<td>' . $inp2 . '</td>';?>
+                <?php echo '<td>$' . $subPrice2 . '</td>';?>
             </tr>
             <tr>
                 <td>93ZZ-A</td>
                 <td>$28.99ea</td>
-                <?php echo "<td>" . $inp3 . "</td>";?>
+                <?php echo '<td>' . $inp3 . '</td>';?>
                 <?php echo '<td> $' . $subPrice3 . '</td>';?>
             </tr>
             <tr>
                 <td>Your SubTotal is:</td>
                 <td></td>
-                <td></td>
+                <?php echo '<td>' . $numItems . '</td>';?>
                 <?php echo '<td>' . $subTotal . '</td>';?>
             </tr>
         </tbody>

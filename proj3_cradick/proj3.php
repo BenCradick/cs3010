@@ -20,12 +20,12 @@ $subPrice3 = $price3 * $inp3;
 //All the sub prices added up
 $subTotal = $subPrice1 + $subPrice2 + $subPrice3;
 
-$total = $subTotal*calcDiscount($numItems) + calcShipping($numItems);
+$total = ($subTotal + calcShipping($numItems))*calcDiscount($numItems);
 $tax = calcTax($state, $subTotal, $numItems);
 
 //returns number to multiply by if there is a discount
 function calcDiscount($numItems){
-    return ($numItems>=50 ? 0.95 : 1);
+    return ($numItems>50 ? 0.95 : 1);
 }
 //returns tax rate for state as a decimal representation of a percentage
 function calcTax($state, $subTotal, $numItems){
@@ -38,17 +38,110 @@ function calcTax($state, $subTotal, $numItems){
             return 0;
     }
 }
+function getTaxRate($state){
+    switch($state){
+        case 'KS':
+            return '+ 4.375%';
+        case 'FL':
+            return '+ 6.265%';
+        default:
+            return '+ 0.000%';
+    }
+}
 //returns amount to be charged for shipping
 function calcShipping($numItems){
     return ($numItems < 30 ? 8.74 : 15.35);
 }
-function calcTotal(){
-
+function calcTotal($numItems, $tax, $subTotal){
+    return calcShipping($numItems) + $subTotal + $tax;
+}
+function printTax($state, $tax, $numItems){
+        echo '<tr><td> Taxes Due</td>';
+        echo '<td>State: ' . abbrevToName($state) . '</td>';
+        echo '<td>' . getTaxRate($state) . '</td>';
+        echo '<td>' . $tax*calcDiscount($numItems) . '</td></tr>';
+}
+function printShipping($numItems){
+    echo '<tr><td>Shipping cost:</td>';
+    echo '<td></td>';
+    echo '<td></td>';
+    echo '<td>$' . calcShipping($numItems) . '</td></tr>';
 }
 function extendTable($numItems, $state, $tax, $subTotal){
-    echo "<tr>\n";
-    echo "\t<td>";
+    if(calcDiscount($numItems) == 0.95){
+        echo '<tr><td>Discount:</td>';
+        echo '<td></td>';
+        echo '<td>-5%</td>';
+        echo '<td>' . (calcTotal($numItems, $tax, $subTotal))*0.05 . '</td></tr>';    
+    }
+    if($state == 'KS'){
+        printShipping($numItems);
+        printTax($state, $tax, $numItems);
 
+    }
+    else{
+        printTax($state, $tax, $numItems);
+        printShipping($numItems);
+    }
+    
+
+
+}
+function abbrevToName($state){
+    $fullName = array(
+    'AL'=>'Alabama',
+    'AK'=>'Alaska',
+    'AZ'=>'Arizona',
+    'AR'=>'Arkansas',
+    'CA'=>'California',
+    'CO'=>'Colorado',
+    'CT'=>'Connecticut',
+    'DE'=>'Delaware',
+    'DC'=>'District of Columbia',
+    'FL'=>'Florida',
+    'GA'=>'Georgia',
+    'HI'=>'Hawaii',
+    'ID'=>'Idaho',
+    'IL'=>'Illinois',
+    'IN'=>'Indiana',
+    'IA'=>'Iowa',
+    'KS'=>'Kansas',
+    'KY'=>'Kentucky',
+    'LA'=>'Louisiana',
+    'ME'=>'Maine',
+    'MD'=>'Maryland',
+    'MA'=>'Massachusetts',
+    'MI'=>'Michigan',
+    'MN'=>'Minnesota',
+    'MS'=>'Mississippi',
+    'MO'=>'Missouri',
+    'MT'=>'Montana',
+    'NE'=>'Nebraska',
+    'NV'=>'Nevada',
+    'NH'=>'New Hampshire',
+    'NJ'=>'New Jersey',
+    'NM'=>'New Mexico',
+    'NY'=>'New York',
+    'NC'=>'North Carolina',
+    'ND'=>'North Dakota',
+    'OH'=>'Ohio',
+    'OK'=>'Oklahoma',
+    'OR'=>'Oregon',
+    'PA'=>'Pennsylvania',
+    'RI'=>'Rhode Island',
+    'SC'=>'South Carolina',
+    'SD'=>'South Dakota',
+    'TN'=>'Tennessee',
+    'TX'=>'Texas',
+    'UT'=>'Utah',
+    'VT'=>'Vermont',
+    'VA'=>'Virginia',
+    'WA'=>'Washington',
+    'WV'=>'West Virginia',
+    'WI'=>'Wisconsin',
+    'WY'=>'Wyoming',
+);
+    return $fullName[$state];
 }
 ?>
 
@@ -92,6 +185,7 @@ function extendTable($numItems, $state, $tax, $subTotal){
                 <?php echo '<td>' . $numItems . '</td>';?>
                 <?php echo '<td>' . $subTotal . '</td>';?>
             </tr>
+            <?php extendTable($numItems, $state, $tax, $subTotal); ?>
         </tbody>
     </table>
     <br>

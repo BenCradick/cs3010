@@ -49,8 +49,9 @@ function extraShipping(){
 }
 function writeBox(){
     document.getElementById("shipAgree").innerHTML = ` I agree to be charged an additional fee for shipping over 30 items <input type="checkbox" title="extraShipping" value="Agree" onClick="feeAgree()">`
-
-    shipExtraExist = true;
+    feeAgree()
+    feeCheck = false
+    shipExtraExist = true
 }
 function submit(){
     if(Number(inputId.inp1.subQuantity) < 0 || Number(inputId.inp2.subQuantity) < 0 || Number(inputId.inp3.subQuantity) < 0){
@@ -60,18 +61,28 @@ function submit(){
     if(extraShipping() && !feeCheck)
     {
         alert("More than 30 items to be shipped, please check box saying you agree to the additional fee.")
-        feeCheck? alert("Order Placed"): alert("Please check box agreeing to additional fee");
+        
     }
     else{
-        alert("Order Placed")
+        document.getElementById("thisForm").submit();
     }
 
 }
 function feeAgree(){
     //race concditions were occuring causing check box to get stuck on the  wrong display
     setTimeout('document.getElementById("shipAgree").disabled=true', 300)
-    feeCheck = !feeCheck;
-    console.log(feeCheck)
+    feeCheck = !feeCheck
+
+    if(feeCheck){
+        document.getElementById("buttonLocation").innerHTML = `<button id="button" type="button" onclick=submit() >Submit</button>`
+    }
+    else if(!feeCheck){
+        document.getElementById("buttonLocation").innerHTML = `<button id="button" type="button" >Submit</button>`
+    }
+    else{
+        console.log("dafuq?")
+    }
+    
 }
 function subTotal()
 {

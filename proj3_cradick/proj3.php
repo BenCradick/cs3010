@@ -31,9 +31,9 @@ function calcDiscount($numItems){
 function calcTax($state, $subTotal, $numItems){
     switch ($state) {
         case 'KS':
-            return 0.04375*($subTotal + calcShipping($numItems));
+            return number_format(round((0.04375*$subTotal + calcShipping($numItems)), 2), 2, '.', '');
         case 'FL':
-            return 0.06265*$subTotal;
+            return number_format(round(0.06265*$subTotal, 2), 2, '.', '');
         default:
             return 0;
     }
@@ -53,13 +53,13 @@ function calcShipping($numItems){
     return ($numItems < 30 ? 8.74 : 15.35);
 }
 function calcTotal($numItems, $tax, $subTotal){
-    return calcShipping($numItems) + $subTotal + $tax;
+    return number_format(round(calcShipping($numItems)+ $subTotal + $tax, 2),  2, '.', '');
 }
 function printTax($state, $tax, $numItems){
         echo '<tr><td> Taxes Due</td>';
         echo '<td>State: ' . abbrevToName($state) . '</td>';
         echo '<td>' . getTaxRate($state) . '</td>';
-        echo '<td>' . $tax*calcDiscount($numItems) . '</td></tr>';
+        echo '<td>$' . number_format(round($tax*calcDiscount($numItems), 2), 2, '.', '') . '</td></tr>';
 }
 function printShipping($numItems){
     echo '<tr><td>Shipping cost:</td>';
@@ -72,7 +72,7 @@ function extendTable($numItems, $state, $tax, $subTotal){
         echo '<tr><td>Discount:</td>';
         echo '<td></td>';
         echo '<td>-5%</td>';
-        echo '<td>' . (calcTotal($numItems, $tax, $subTotal))*0.05 . '</td></tr>';    
+        echo '<td>$' . number_format(round(calcTotal($numItems, $tax, $subTotal)*0.05, 2), 2, '.', '') . '</td></tr>';    
     }
     if($state == 'KS'){
         printShipping($numItems);
@@ -83,6 +83,10 @@ function extendTable($numItems, $state, $tax, $subTotal){
         printTax($state, $tax, $numItems);
         printShipping($numItems);
     }
+    echo '<tr><td>Total:</td>';
+    echo '<td></td>';
+    echo '<td></td>';
+    echo '<td>$' . number_format(round(calcTotal($numItems, $tax, $subTotal), 2), 2, '.', '') . '</td></tr>';
     
 
 
@@ -165,25 +169,25 @@ function abbrevToName($state){
                 <td>37AX-L</td>
                 <td>$12.45ea</td>
                 <?php echo '<td>' . $inp1 . '</td>';?>
-                <?php echo '<td>$' . $subPrice1 . '</td>';?>
+                <?php echo '<td>$' . number_format(round($subPrice1, 2), 2, '.', '') . '</td>';?>
             </tr>
             <tr>
                 <td>42XR-J</td>
                 <td>$15.34ea</td>
                 <?php echo '<td>' . $inp2 . '</td>';?>
-                <?php echo '<td>$' . $subPrice2 . '</td>';?>
+                <?php echo '<td>$' . number_format(round($subPrice2, 2), 2, '.', '') . '</td>';?>
             </tr>
             <tr>
                 <td>93ZZ-A</td>
                 <td>$28.99ea</td>
                 <?php echo '<td>' . $inp3 . '</td>';?>
-                <?php echo '<td> $' . $subPrice3 . '</td>';?>
+                <?php echo '<td> $' . number_format(round($subPrice3, 2), 2, '.', '') . '</td>';?>
             </tr>
             <tr>
                 <td>Your SubTotal is:</td>
                 <td></td>
                 <?php echo '<td>' . $numItems . '</td>';?>
-                <?php echo '<td>' . $subTotal . '</td>';?>
+                <?php echo '<td>$' . number_format(round($subTotal, 2), 2, '.', '') . '</td>';?>
             </tr>
             <?php extendTable($numItems, $state, $tax, $subTotal); ?>
         </tbody>
